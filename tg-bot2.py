@@ -1,4 +1,4 @@
- ИМПОРТ БИБЛИОТЕК
+
 import telebot
 from random import randint
 from datetime import datetime
