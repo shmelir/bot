@@ -205,7 +205,19 @@ def field2(message):
     else:
         bot.send_message(message.chat.id, "Попробуй еще раз")
 
+def number_identification(photo):
+    np.set_printoptions(suppress=True)
+    model = load_model("mnist_model.h5", compile=False)
+    image = Image.open(photo).convert("L")
+    image = ImageOps.invert(image)
+    size = (28, 28)
+    image = ImageOps.fit(image, size, method=Image.Resampling.LANCZOS)
+    image_array = np.asarray(image).astype(np.float32) / 255.0
+    image_array = image_array.reshape(1, 28, 28, 1)
+    prediction = model.predict(image_array)
+    index = np.argmax(prediction)
 
+    return str(index)
 def ball_answer(message):
     text = message.text
     answers_list = ["Да", "Нет", "Неизвестно", "Скорее да, чем нет", "Скорее нет, чем да"]
